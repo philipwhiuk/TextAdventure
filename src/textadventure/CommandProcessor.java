@@ -7,10 +7,21 @@ import java.util.Map.Entry;
 import textadventure.Exit.Direction;
 import textadventure.Quest.Status;
 
+/**
+ * Processes game commands.
+ * @author Philip
+ * @since 1.0.0
+ */
 public class CommandProcessor {
 
 	protected static GUI gui;
 	private static Game game;
+	/**
+	 * @param _game Game
+	 * @param _gui GUI
+	 * @param command Command to process
+	 * @param more Further text
+	 */
 	public static void process(Game _game, GUI _gui, String command, String more) {
 		gui = _gui;
 		game = _game;
@@ -45,6 +56,10 @@ public class CommandProcessor {
         }
 	}
 
+	/**
+	 * Process help commands
+	 * @param input Item to get help on.
+	 */
 	protected static void processHelp(String input) {
         if(input.equals("")) {
             gui.addMessageLine("A list of commands follows. For details on each one, type 'HELP [COMMAND]' accordingly. " +
@@ -90,6 +105,10 @@ public class CommandProcessor {
             }
         }
     }
+	/**
+	 * Process inventory commands
+	 * @param more Further command data
+	 */
     private static void processInventory(String more) {
     	Iterator<Entry<String, Item>> i = game.getInventory().entrySet().iterator();
     	if(i.hasNext()) {
@@ -100,6 +119,10 @@ public class CommandProcessor {
             gui.addMessageLine("None");
         }    	
     }
+    /**
+     * Process take commands.
+     * @param item Item
+     */
     private static void processTake(String item) {
         if(game.getLocation().hasItem(item)) {
         	Item i = game.getLocation().takeItem(item);
@@ -109,6 +132,10 @@ public class CommandProcessor {
         	gui.addMessageLine("No such item: "+item);
         }
     }
+    /**
+     * Process drop commands.
+     * @param item Item
+     */
     private static void processDrop(String item) {
         if(game.getInventory().containsKey(item)) {
         	Item i = game.getInventory().remove(item);
@@ -118,9 +145,13 @@ public class CommandProcessor {
         	gui.addMessageLine("No such item: "+item);
         }
     }    
-    private static void processMove(String more) {
+    /**
+     * Process move command.
+     * @param direction Direction
+     */
+    private static void processMove(String direction) {
         try {
-            Direction d = Exit.Direction.valueOf(more);
+            Direction d = Exit.Direction.valueOf(direction);
             if(game.getLocation().hasExit(d)) {
                 game.move(game.getLocations().get(game.getLocation().getExit(d).location));
             }
@@ -131,13 +162,21 @@ public class CommandProcessor {
             gui.addMessageLine("Direction Not Found");                
         }        
     }
-    private static void processExamine(String entity) {
-    	if(game.getLocation().hasItem(entity)) {
-    		gui.addMessageLine(game.getLocation().infoItem(entity).getDescription());
-    	} else if(game.getInventory().containsKey(entity)) {
-    		gui.addMessageLine(game.getInventory().get(entity).getDescription());
+    /**
+     * Process an examine command
+     * @param item Item to examine
+     */
+    private static void processExamine(String item) {
+    	if(game.getLocation().hasItem(item)) {
+    		gui.addMessageLine(game.getLocation().infoItem(item).getDescription());
+    	} else if(game.getInventory().containsKey(item)) {
+    		gui.addMessageLine(game.getInventory().get(item).getDescription());
     	}
     }
+    /**
+     * Process an equip command
+     * @param item Item
+     */
     private static void processEquip(String item) {
     	if(game.getInventory().containsKey(item)) {
     		Item i2 = null;
@@ -155,6 +194,10 @@ public class CommandProcessor {
     		gui.addMessageLine("Not carrying: "+item);
     	}
     }
+    /**
+     * Process an un-equip command
+     * @param slot Slot to remove item from.
+     */
     private static void processUnequip(String slot) {
     	if(game.getEquipment().containsKey(slot) && game.getEquipment().get(slot) != null) {
     		Item i = game.getEquipment().put(slot, null);

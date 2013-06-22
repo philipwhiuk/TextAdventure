@@ -85,60 +85,67 @@ class Location {
     }
 	/**
 	 * 
-	 * @return
+	 * @return ID
 	 */
 	public int getID() {
 		return ID;
 	}
+	/**
+	 * 
+	 * @return Name
+	 */
 	public String getName() {
 		return name;
 	}
+	/**
+	 * 
+	 * @return Description
+	 */
 	public String getDescription() {
 		return description;
 	}    
     /**
      * 
-     * @param direction
-     * @param exit
-     * @throws GameFileException
+     * @param direction The direction to add the exit
+     * @param exit The exit to add
      */
-    private void add(Direction direction, Exit exit) throws GameFileException {
+    private void add(Direction direction, Exit exit) {
         exits.put(direction,exit);
     }
     /**
      * 
-     * @param itemName
-     * @param i
+     * @param itemName The name of item
+     * @param i The item
      */
     private void add(String itemName, Item i) {
         items.put(itemName,i);
     }
     /**
      * 
-     * @param name
-     * @param m
+     * @param name Name of NPC
+     * @param npc NPC to add
      */
-    private void add(String npcName, NPC npc) {
-		npcs.put(npcName, npc);
+    private void add(String name, NPC npc) {
+		npcs.put(name, npc);
 	}    
     /**
      * 
-     * @param direction
-     * @return
+     * @param direction The direction
+     * @return True if there's an exit
      */
     boolean hasExit(Direction direction) {
         return exits.containsKey(direction);
     }
     /**
-     * 
-     * @param direction
-     * @return
+     * Retrieve the exit in a given direction.
+     * @param direction The direction to get the exit for
+     * @return The exit
      */
     Exit getExit(Direction direction) {
         return exits.get(direction);
     }
     /**
-     * 
+     * Output all the exits
      * @return A comma separated list of exits
      */
     String printExits() {
@@ -155,7 +162,7 @@ class Location {
     }
     /**
      * 
-     * @param item
+     * @param item Name of the item
      * @return The item that was taken
      */
     Item takeItem(String item) {    	
@@ -163,7 +170,7 @@ class Location {
     }
     /**
      * 
-     * @param item
+     * @param item The item to check for
      * @return True if the item exists, else false
      */
     boolean hasItem(String item) {
@@ -178,15 +185,25 @@ class Location {
     }
     /**
      * 
-     * @param entity
-     * @return
+     * @param entity The name of the item to look for.
+     * @return The item
      */
 	public Item infoItem(String entity) {
 		return items.get(entity);
 	}
+	/**
+	 * 
+	 * @param npc The name of the NPC
+	 * @return True if present
+	 */
 	public boolean hasNPC(String npc) {
 		return npcs.containsKey(npc);
 	}
+	/**
+	 * 
+	 * @param npc The name of the NPC
+	 * @return The NPC
+	 */
 	public NPC getNPC(String npc) {
 		return npcs.get(npc);
 	}

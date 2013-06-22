@@ -24,6 +24,11 @@ public class GUI extends TAGPanel implements ActionListener {
 	private URL codebase;
 	private TAGApplet app;
     
+	/**
+	 * Constructor.
+	 * @param app Parent applet
+	 * @param codebase Code-base.
+	 */
     public GUI(TAGApplet app, URL codebase) {
     	this.app = app;
     	this.codebase = codebase;

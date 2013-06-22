@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -33,9 +34,15 @@ public class Game {
     }
     protected static String fileVersion = "1.0";
 	private static Game game;
+	/**
+	 * @return Singleton game
+	 */
 	public static Game getGame() {
 		return game;
 	}
+	/**
+	 * @param _game Game.
+	 */
 	public static void setGame(Game _game) {
 		game = _game;
 	}	
@@ -164,34 +171,77 @@ public class Game {
     protected void setGUI(GUI gui) {
         this.gui = gui;
     }
+    /**
+     * Output the game description
+     */
 	public void showDescription() {
 		gui.addMessageLine(description);
 	}
+	/**
+	 * Get the player's inventory.
+	 * @return Inventory
+	 */
 	public HashMap<String,Item> getInventory() {
 		return inventory;
 	}
+	/**
+	 * See if the player has progress in a given quest.
+	 * @param quest Quest to check for
+	 * @return True if player has progress
+	 */
 	public boolean hasQuest(String quest) {
 		return questList.containsKey(quest);
 	}
+	/**
+	 * Get the player's location
+	 * @return Location
+	 */
 	public Location getLocation() {
 		return location;
 	}
+	/**
+	 * Get the player's equipment.
+	 * @return Equipment
+	 */
 	public HashMap<String, Item> getEquipment() {
 		return equipment;
 	}
-	public HashMap<Integer, Location> getLocations() {
+	/**
+	 * Get the mapping of locations
+	 * @return Mapping of location ID to locations.
+	 */
+	public Map<Integer, Location> getLocations() {
 		return locations;
 	}
+	/**
+	 * Quest in the player's quest list.
+	 * @param quest Name of quest
+	 * @return Quest
+	 */
 	public Quest getQuest(String quest) {
 		return questList.get(quest);
 	}
+	/**
+	 * Get the status of a quest in the player's quest list.
+	 * @param quest Name of quest
+	 * @return status
+	 */
 	public Quest.Status getPlayerQuestStatus(Quest quest) {
 		return quests.get(quest);
 	}
+	/**
+	 * 
+	 * @param quest Quest to change status of
+	 * @param status Status to set to.
+	 */
 	public void setPlayerQuestStatus(Quest quest, Quest.Status status) {
 		quests.put(quest, status);
 	}
-	public HashMap<Quest, Status> getPlayerQuests() {
+	/**
+	 * 
+	 * @return Mapping between quest and status
+	 */
+	public Map<Quest, Status> getPlayerQuests() {
 		return quests;
 	}
 

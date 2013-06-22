@@ -10,18 +10,49 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+/**
+ * A dialogue between a player and NPC
+ * @author Philip
+ *
+ */
 public class Conversation {
+    /**
+     * The conversation name.
+     */
 	public String name;
+	/**
+	 * In
+	 */
 	public String In;
+	/**
+	 * Out
+	 */
 	public String Out;
+	/**
+	 * Options
+	 */
 	public HashMap<String,String> options;
+	/**
+	 * Actions
+	 */
 	public ArrayList<ConversationAction> actions;
+	/**
+	 * The NPC associated with the conversation.
+	 */
 	public NPC npc;
+	/**
+	 * Default constructor.
+	 */
 	public Conversation() {
 		options = new HashMap<String,String>();
 		actions = new ArrayList<ConversationAction>();
 	}
 
+	/**
+	 * Proceed with the conversation.
+	 * @param string Extra commands
+	 * @return Resulting conversation output.
+	 */
 	public String doTalk(String string) {
 		//TODO: Complex Conversation Actions
 		String conversation = "Player:"+In+"\n"+"NPC:"+Out+"\n";
@@ -48,6 +79,11 @@ public class Conversation {
 		return conversation;
 	}
 
+	/**
+	 * Reads conversation data from XML
+	 * @param node The node storing the conversation
+	 * @return The conversation.
+	 */
 	public static Conversation Read(Element node) {
 		Conversation c = new Conversation();
 		c.name = node.getAttribute("name");
@@ -72,8 +108,13 @@ public class Conversation {
 		return c;
 	}
 
-	public boolean hasOption(String string) {
-		return options.containsKey(string);
+	/**
+	 * Whether a given option is present.
+	 * @param option The option
+	 * @return True if present
+	 */
+	public boolean hasOption(String option) {
+		return options.containsKey(option);
 	}
 
 }

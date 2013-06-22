@@ -11,7 +11,13 @@ import java.applet.Applet;
  * @author Philip
  */
 public class TAGApplet extends Applet {
+    /**
+     * 
+     */
     private static final long serialVersionUID = 1L;  
+    /**
+     * 
+     */
     private TAGPanel screen;
     @Override
     public void init() {
@@ -19,8 +25,15 @@ public class TAGApplet extends Applet {
         add(screen);
         setSize(getPreferredSize());
     }
+    /**
+     * 
+     */
     public void start() {
     }
+    /**
+     * 
+     * @return Screen
+     */
     public TAGPanel getScreen() {
     	return screen;
     }
