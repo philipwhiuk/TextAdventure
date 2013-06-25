@@ -12,23 +12,79 @@ import com.whiuk.philip.textadventure.Game.GameFileException;
  */
 class Exit {
 
+    /**
+     * 
+     * @author Philip
+     *
+     */
     static class InvalidDirectionGameFileException extends GameFileException {
+        /**
+         * 
+         */
         private static final long serialVersionUID = 1L;
-        InvalidDirectionGameFileException(String message, Exception e) {
-            super(message,e);
+        /**
+         * 
+         * @param message
+         * @param e
+         */
+        InvalidDirectionGameFileException(final String message, final Exception e) {
+            super(message, e);
         }
     }
 
-    enum Direction{NORTH,EAST,SOUTH,WEST,UP,DOWN}
-    
-    Direction direction;    
+    /**
+     * 
+     * @author Philip
+     *
+     */
+    enum Direction {
+        /**
+         * 
+         */
+        NORTH,
+        /**
+         * 
+         */
+        EAST,
+        /**
+         * 
+         */
+        SOUTH,
+        /**
+         * 
+         */
+        WEST,
+        /**
+         * 
+         */
+        UP,
+        /**
+         * 
+         */
+        DOWN
+    }
+
+
+    /**
+     * 
+     */
+    Direction direction;
+    /**
+     * 
+     */
     int location;
-    Exit(String location, String direction) throws GameFileException {
-        this.location = Integer.parseInt(location);
+    /**
+     * 
+     * @param l
+     * @param d
+     * @throws GameFileException
+     */
+    Exit(final String l, final String d) throws GameFileException {
+        this.location = Integer.parseInt(l);
         try {
-            this.direction = Direction.valueOf(direction);
+            this.direction = Direction.valueOf(d);
         } catch (IllegalArgumentException iae) {
-            throw new InvalidDirectionGameFileException("Exit.Direction."+direction+" doesn't exist",iae);
+            throw new InvalidDirectionGameFileException("Exit.Direction." + d + " doesn't exist", iae);
         }
     }
     

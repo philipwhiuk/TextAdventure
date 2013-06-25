@@ -27,13 +27,32 @@ import com.whiuk.philip.textadventure.Quest.Status;
  * @author Philip
  */
 public class Game {
+    /**
+     * 
+     * @author Philip
+     *
+     */
     protected static class GameFileException extends Exception {
+        /**
+         * 
+         */
         private static final long serialVersionUID = 1L;
-        GameFileException(String message, Exception e) {
-            super(message,e);
-        }        
+        /**
+         * 
+         * @param message
+         * @param e
+         */
+        GameFileException(final String message, final Exception e) {
+            super(message, e);
+        }
     }
+    /**
+     * 
+     */
     protected static String fileVersion = "1.0";
+    /**
+     * 
+     */
 	private static Game game;
 	/**
 	 * @return Singleton game
@@ -42,14 +61,21 @@ public class Game {
 		return game;
 	}
 	/**
-	 * @param _game Game.
+	 * @param g Game.
 	 */
-	public static void setGame(Game _game) {
-		game = _game;
-	}	
-    protected static Game Load(TAGApplet app, URL url, String filename) {
+	public static void setGame(final Game g) {
+		game = g;
+	}
+	/**
+	 * 
+	 * @param app
+	 * @param url
+	 * @param filename
+	 * @return
+	 */
+    protected static Game load(final TAGApplet app, final URL url, final String filename) {
     	InputStream is = Game.class.getResourceAsStream(filename);
-    	if(is != null) {  
+    	if (is != null) {  
 	    	try {
 		        GUI gui = (GUI) app.getScreen();
 		        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -57,10 +83,10 @@ public class Game {
 		        Document doc = dBuilder.parse(is);
 		        doc.getDocumentElement().normalize();
 		        Element gNode = doc.getDocumentElement();
-		        if(gNode.getAttribute("version").equalsIgnoreCase(Game.fileVersion)) {
-		        	Game game = Read(gui,gNode);
-			        gui.addMessageLine("Loaded: "+game.name);
-			        return game;		        	
+		        if (gNode.getAttribute("version").equalsIgnoreCase(Game.fileVersion)) {
+		        	Game g = read(gui, gNode);
+			        gui.addMessageLine("Loaded: " + g.name);
+			        return g;
 		        }
 	    	} catch (Exception e) {
 	    		e.printStackTrace();
@@ -68,34 +94,42 @@ public class Game {
     	}
         return null;
     }
-    private static Game Read(GUI gui,Element gNode) throws IOException, GameFileException {
+    /**
+     * 
+     * @param gui
+     * @param gNode
+     * @return
+     * @throws IOException
+     * @throws GameFileException
+     */
+    private static Game read(final GUI gui, final Element gNode) throws IOException, GameFileException {
         Game g = new Game(gui);
-        g.start_location = Integer.parseInt(gNode.getAttribute("startLocation"));
+        g.startLocation = Integer.parseInt(gNode.getAttribute("startLocation"));
         g.name = gNode.getAttribute("name");
         
         NodeList nodes = gNode.getChildNodes();
-        for(int n=0; n < nodes.getLength(); n++) {
+        for (int n = 0; n < nodes.getLength(); n++) {
         	Node nNode = nodes.item(n);
         	if (nNode.getNodeType() == Node.ELEMENT_NODE) {
         		Element eElement = (Element) nNode;
-        		if(eElement.getTagName().equals("description")) {
+        		if (eElement.getTagName().equals("description")) {
         			g.description = ((Text) eElement.getFirstChild()).getData();        			
-        		} else if(eElement.getTagName().equals("startText")) { 
-        			g.start_text = ((Text) eElement.getFirstChild()).getData();  
-        		} else if(eElement.getTagName().equals("locations")) {
+        		} else if (eElement.getTagName().equals("startText")) { 
+        			g.startText = ((Text) eElement.getFirstChild()).getData();  
+        		} else if (eElement.getTagName().equals("locations")) {
         			NodeList lList = eElement.getChildNodes();
-        			for(int lNode = 0; lNode < lList.getLength(); lNode++) {
-        				if(lList.item(lNode).getNodeType() == Node.ELEMENT_NODE) {
-        					Location l = Location.Read((Element) lList.item(lNode)); 
-        					g.add(l.getID(),l);
+        			for (int lNode = 0; lNode < lList.getLength(); lNode++) {
+        				if (lList.item(lNode).getNodeType() == Node.ELEMENT_NODE) {
+        					Location l = Location.read((Element) lList.item(lNode)); 
+        					g.add(l.getID(), l);
         				}
         			}
-        		} else if(eElement.getTagName().equals("quests")) {
+        		} else if (eElement.getTagName().equals("quests")) {
         			NodeList lList = eElement.getChildNodes();
-        			for(int lNode = 0; lNode < lList.getLength(); lNode++) {
-        				if(lList.item(lNode).getNodeType() == Node.ELEMENT_NODE) {
-        					Quest q = Quest.Read((Element) lList.item(lNode)); 
-        					g.add(q.getName(),q);
+        			for (int lNode = 0; lNode < lList.getLength(); lNode++) {
+        				if (lList.item(lNode).getNodeType() == Node.ELEMENT_NODE) {
+        					Quest q = Quest.read((Element) lList.item(lNode)); 
+        					g.add(q.getName(), q);
         				}
         			}
         		}
@@ -104,85 +138,147 @@ public class Game {
         return g;
     }	
 
-
-
-
-	private GUI gui;            
+    /**
+     * 
+     */
+    private GUI gui;
     // Game Data;
+    /**
+     * 
+     */
 	private String name;
-	private String description;    
-	private int start_location;        
-	private String start_text;    
-	private HashMap<String, Quest> questList;    
-	private HashMap<Integer,Location> locations;    
+    /**
+     * 
+     */
+	private String description;
+    /**
+     * 
+     */
+	private int startLocation;
+    /**
+     * 
+     */
+	private String startText;
+    /**
+     * 
+     */
+	private HashMap<String, Quest> questList;
+    /**
+     * 
+     */
+	private HashMap<Integer, Location> locations;
 	
 
 	// Game State Data
-	private boolean started = false;   
+    /**
+     * 
+     */
+	private boolean started = false;
 
 
 	
 	// Player Data
-    private HashMap<String,Item> inventory;
-    private HashMap<String,Item> equipment;
-    private HashMap<Quest,Quest.Status> quests;
+    /**
+     * 
+     */
+    private HashMap<String, Item> inventory;
+    /**
+     * 
+     */
+    private HashMap<String, Item> equipment;
+    /**
+     * 
+     */
+    private HashMap<Quest, Quest.Status> quests;
+    /**
+     * 
+     */
 	private Location location;
-    
-    protected Game(GUI gui) {
-        this.gui = gui;
-        equipment = new HashMap<String,Item>();
-        inventory = new HashMap<String,Item>();
-        locations = new HashMap<Integer,Location>();
-        quests = new HashMap<Quest,Quest.Status>();
-        questList = new HashMap<String,Quest>();
+
+	/**
+	 * 
+	 * @param g
+	 */
+    protected Game(final GUI g) {
+        this.gui = g;
+        equipment = new HashMap<String, Item>();
+        inventory = new HashMap<String, Item>();
+        locations = new HashMap<Integer, Location>();
+        quests = new HashMap<Quest, Quest.Status>();
+        questList = new HashMap<String, Quest>();
     }
-    protected void processCommand(String command, String more) {
-    	if(started) {
-    		CommandProcessor.process(this,gui, command,more);
-        } else if(command.equals("START")) {
+    /**
+     * 
+     * @param command
+     * @param more
+     */
+    protected final void processCommand(final String command, final String more) {
+    	if (started) {
+    		CommandProcessor.process(this, gui, command, more);
+        } else if (command.equals("START")) {
         	start();
-        } else if(command.equals("HELP")) {
+        } else if (command.equals("HELP")) {
         	CommandProcessor.processHelp(more);
         } else {
-            gui.addMessageLine("Action Not Found");                
+            gui.addMessageLine("Action Not Found");
         }
-    }    
-    protected void start() {
-        if(locations.get(start_location) != null) {
-        	gui.addMessageLine(start_text);    	
-        	move(locations.get(start_location));
+    }
+    /**
+     * 
+     */
+    protected final void start() {
+        if (locations.get(startLocation) != null) {
+        	gui.addMessageLine(startText);    	
+        	move(locations.get(startLocation));
         	started = true;
-        }
-        else {
+        } else {
             gui.addMessageLine("No Start Point!");
         }
-    }    
-    protected void move(Location l) {
+    }
+    /**
+     * 
+     * @param l
+     */
+    protected final void move(final Location l) {
         this.location = l;
         gui.addMessageLine(location.getName());
         gui.addMessageLine(location.getDescription());
-        gui.addMessageLine("Exits: "+location.printExits());
-    }
-    private void add(int ID, Location l) {
-        locations.put(ID,l);
-    }   
-    private void add(String name, Quest q) {
-		questList.put(name,q);
-	}
-    protected void setGUI(GUI gui) {
-        this.gui = gui;
+        gui.addMessageLine("Exits: " + location.printExits());
     }
     /**
-     * Output the game description
+     * 
+     * @param id identifier
+     * @param l location
      */
-	public void showDescription() {
+    private void add(final int id, final Location l) {
+        locations.put(id, l);
+    }
+    /**
+     * 
+     * @param n name
+     * @param q quest
+     */
+    private void add(final String n, final Quest q) {
+		questList.put(n, q);
+	}
+    /**
+     * 
+     * @param g GUI
+     */
+    protected final void setGUI(final GUI g) {
+        this.gui = g;
+    }
+    /**
+     * Output the game description.
+     */
+	public final void showDescription() {
 		gui.addMessageLine(description);
 	}
 	/**
 	 * Get the player's inventory.
 	 * @return Inventory
 	 */
-	public HashMap<String,Item> getInventory() {
+	public final HashMap<String, Item> getInventory() {
 		return inventory;
 	}
 	/**
@@ -190,28 +286,28 @@ public class Game {
 	 * @param quest Quest to check for
 	 * @return True if player has progress
 	 */
-	public boolean hasQuest(String quest) {
+	public final boolean hasQuest(final String quest) {
 		return questList.containsKey(quest);
 	}
 	/**
-	 * Get the player's location
+	 * Get the player's location.
 	 * @return Location
 	 */
-	public Location getLocation() {
+	public final Location getLocation() {
 		return location;
 	}
 	/**
 	 * Get the player's equipment.
 	 * @return Equipment
 	 */
-	public HashMap<String, Item> getEquipment() {
+	public final HashMap<String, Item> getEquipment() {
 		return equipment;
 	}
 	/**
-	 * Get the mapping of locations
+	 * Get the mapping of locations.
 	 * @return Mapping of location ID to locations.
 	 */
-	public Map<Integer, Location> getLocations() {
+	public final Map<Integer, Location> getLocations() {
 		return locations;
 	}
 	/**
@@ -219,7 +315,7 @@ public class Game {
 	 * @param quest Name of quest
 	 * @return Quest
 	 */
-	public Quest getQuest(String quest) {
+	public final Quest getQuest(final String quest) {
 		return questList.get(quest);
 	}
 	/**
@@ -227,7 +323,7 @@ public class Game {
 	 * @param quest Name of quest
 	 * @return status
 	 */
-	public Quest.Status getPlayerQuestStatus(Quest quest) {
+	public final Quest.Status getPlayerQuestStatus(final Quest quest) {
 		return quests.get(quest);
 	}
 	/**
@@ -235,14 +331,14 @@ public class Game {
 	 * @param quest Quest to change status of
 	 * @param status Status to set to.
 	 */
-	public void setPlayerQuestStatus(Quest quest, Quest.Status status) {
+	public final void setPlayerQuestStatus(final Quest quest, final Quest.Status status) {
 		quests.put(quest, status);
 	}
 	/**
 	 * 
 	 * @return Mapping between quest and status
 	 */
-	public Map<Quest, Status> getPlayerQuests() {
+	public final Map<Quest, Status> getPlayerQuests() {
 		return quests;
 	}
 

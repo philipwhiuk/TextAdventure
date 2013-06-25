@@ -12,21 +12,35 @@ import java.awt.Graphics;
  *
  * @author Philip
  */
-class GameCanvas extends Canvas{
+class GameCanvas extends Canvas {
+    /**
+     * 
+     */
     private static final long serialVersionUID = 1L;
+    /**
+     * Canvas width.
+     */
+    private static final int CANVAS_WIDTH = 200;
+    /**
+     * Canvas height.
+     */
+    private static final int CANVAS_HEIGHT = 200;
 
+    /**
+     *
+     */
     GameCanvas() {
         super();
-        setSize(200,200);
+        setSize(CANVAS_WIDTH, CANVAS_HEIGHT);
     }
     
     @Override
-    public void paint(Graphics g) {
+    public void paint(final Graphics g) {
         g.setColor(Color.black);
-        g.fillRect(0, 9, getSize().width, getSize().height);
+        g.fillRect(0, 0, getSize().width, getSize().height);
     }
     @Override
-    public void update(Graphics g) {
+    public void update(final Graphics g) {
         paint(g);
     }
     

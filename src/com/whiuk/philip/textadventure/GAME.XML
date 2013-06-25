@@ -1,51 +1,51 @@
 <game version="1.0" name="Atlendor Text Adventure Game!" startLocation="1">
-	<description>Explore the world of Atlendor! The first scenario for the TAG System.</description>
-	<startText>Welcome to Atlendor, a land of adventure.</startText>
-	<locations>
-		<location ID="1" name="Forest of Doom">
-			<description>The Forest of doom</description>
-			<exits>
-				<exit room="2" direction="NORTH" />
-			</exits>
-			<items>
-				<item name="FISH" title="Fish">
-					<description>A small cooked trout, this will feed you for a while.</description>
-				</item>
-				<item name="BRONZE SWORD" title="Bronze Sword" isEquippable="true" slot="Main Hand">
-					<description>A sharp pointed object made from bronze, this is a capable weapon.</description>
-					<statistics StabAttack="1" SliceAttack="2" Parry="2" />  
-				</item>				
-			</items>
-			<npcs>
-				<npc name="TOM" isTalkable="true" isAttackable="true" defaultCon="TOM1">
-					<description>A small man, Tom is wandering around the Forest. He looks lost. Maybe you can help?</description>
-					<conversations>
-						<conversation name="TOM1" In="Hello" Out="Hi. It's nice to see a friendly face at last!">
-							<option value="TOM2" text="Can I help you?" />
-							<option value="TOM3" text="Is there anything to do in here?" />						
-						</conversation>
-						<conversation name="TOM2" In="Can I help you?" Out="Well... I hate to admit it but I'm kind of lost! Can you show me the way out?">
-							<option value="TOM4" text="Yes, sure. Follow me"/>
-							<option value="TOM6" text="No sorry. Best of luck."/>							
-						</conversation>
-						<conversation name="TOM4" In="Yes, sure. Follow me" Out="Thanks so much.">
-							<action type="quest" name="LostMan" method="start" />
-						</conversation>
-					</conversations>
-				</npc>
-			</npcs>
-		</location>
-		<location ID="2" name="Forest of Cheese">
-			<description>The forest of cheese</description>
-			<exits>
-				<exit room="1" direction="SOUTH" />
-			</exits>
-		</location>
-	</locations>
-	<quests>
-		<quest name="LostMan" title="The Lost Man">
-			<description></description>
-			<objective name="Escape the Forest of Doom" />
-		</quest>
-	</quests>
+    <description>Explore the world of Atlendor! The first scenario for the TAG System.</description>
+    <startText>Welcome to Atlendor, a land of adventure.</startText>
+    <locations>
+        <location ID="1" name="Forest of Doom">
+            <description>The Forest of doom</description>
+            <exits>
+                <exit room="2" direction="NORTH" />
+            </exits>
+            <items>
+                <item name="FISH" title="Fish">
+                <description>A small cooked trout, this will feed you for a while.</description>
+                </item>
+                <item name="BRONZE SWORD" title="Bronze Sword" isEquippable="true" slot="Main Hand">
+                <description>A sharp pointed object made from bronze, this is a capable weapon.</description>
+                <statistics StabAttack="1" SliceAttack="2" Parry="2" />
+                </item>
+            </items>
+            <npcs>
+                <npc name="TOM" isTalkable="true" isAttackable="true" defaultCon="TOM1">
+                    <description>A small man, Tom is wandering around the Forest. He looks lost. Maybe you can help?</description>
+                    <conversations>
+                        <conversation name="TOM1" In="Hello" Out="Hi. It's nice to see a friendly face at last!">
+                            <option value="TOM2" text="Can I help you?" />
+                            <option value="TOM3" text="Is there anything to do in here?" />
+                        </conversation>
+                        <conversation name="TOM2" In="Can I help you?" Out="Well... I hate to admit it but I'm kind of lost! Can you show me the way out?">
+                            <option value="TOM4" text="Yes, sure. Follow me"/>
+                            <option value="TOM6" text="No sorry. Best of luck."/>
+                        </conversation>
+                        <conversation name="TOM4" In="Yes, sure. Follow me" Out="Thanks so much.">
+                            <action type="quest" name="LostMan" method="start" />
+                        </conversation>
+                    </conversations>
+                </npc>
+            </npcs>
+        </location>
+        <location ID="2" name="Forest of Cheese">
+            <description>The forest of cheese</description>
+            <exits>
+                <exit room="1" direction="SOUTH" />
+            </exits>
+        </location>
+    </locations>
+    <quests>
+        <quest name="LostMan" title="The Lost Man">
+        <description></description>
+        <objective name="Escape the Forest of Doom" />
+        </quest>
+    </quests>
 </game>

@@ -20,8 +20,8 @@ public class TAGApplet extends Applet {
      */
     private TAGPanel screen;
     @Override
-    public void init() {
-    	screen = new GUI(this,this.getCodeBase());
+    public final void init() {
+    	screen = new GUI(this, this.getCodeBase());
         add(screen);
         setSize(getPreferredSize());
     }
@@ -34,7 +34,7 @@ public class TAGApplet extends Applet {
      * 
      * @return Screen
      */
-    public TAGPanel getScreen() {
+    public final TAGPanel getScreen() {
     	return screen;
     }
 }

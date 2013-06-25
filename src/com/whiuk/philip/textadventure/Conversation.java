@@ -11,7 +11,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
- * A dialogue between a player and NPC
+ * A dialogue between a player and NPC.
  * @author Philip
  *
  */
@@ -21,19 +21,19 @@ public class Conversation {
      */
 	public String name;
 	/**
-	 * In
+	 * In.
 	 */
-	public String In;
+	public String in;
 	/**
-	 * Out
+	 * Out.
 	 */
-	public String Out;
+	public String out;
 	/**
-	 * Options
+	 * Options.
 	 */
-	public HashMap<String,String> options;
+	public HashMap<String, String> options;
 	/**
-	 * Actions
+	 * Actions.
 	 */
 	public ArrayList<ConversationAction> actions;
 	/**
@@ -44,7 +44,7 @@ public class Conversation {
 	 * Default constructor.
 	 */
 	public Conversation() {
-		options = new HashMap<String,String>();
+		options = new HashMap<String, String>();
 		actions = new ArrayList<ConversationAction>();
 	}
 
@@ -53,26 +53,25 @@ public class Conversation {
 	 * @param string Extra commands
 	 * @return Resulting conversation output.
 	 */
-	public String doTalk(String string) {
+	public final String doTalk(final String string) {
 		//TODO: Complex Conversation Actions
-		String conversation = "Player:"+In+"\n"+"NPC:"+Out+"\n";
-		
+		String conversation = "Player:" + in + "\n" + "NPC:" + out + "\n";
+
 		Iterator<ConversationAction> ia = actions.iterator();
-		if(ia.hasNext()) {
-			while(ia.hasNext()) {
+		if (ia.hasNext()) {
+			while (ia.hasNext()) {
 				ConversationAction a = ia.next();
-				conversation+=a.doAction();
+				conversation += a.doAction();
 			}
 		}
-		
-		
-		Set<Entry<String,String>> set = options.entrySet();
-		Iterator<Entry<String,String>> io = set.iterator();
-		if(io.hasNext()) {
-			conversation+="\n+Options:\n";
-			while(io.hasNext()) {
-				Entry<String,String> option = io.next();
-				conversation+=option.getKey()+") "+option.getValue()+"\n";
+
+		Set<Entry<String, String>> set = options.entrySet();
+		Iterator<Entry<String, String>> io = set.iterator();
+		if (io.hasNext()) {
+			conversation += "\n+Options:\n";
+			while (io.hasNext()) {
+				Entry<String, String> option = io.next();
+				conversation += option.getKey() + ") " + option.getValue() + "\n";
 			}
 		}
 		NPC.lastConversation = this;
@@ -80,27 +79,27 @@ public class Conversation {
 	}
 
 	/**
-	 * Reads conversation data from XML
+	 * Reads conversation data from XML.
 	 * @param node The node storing the conversation
 	 * @return The conversation.
 	 */
-	public static Conversation Read(Element node) {
+	public static Conversation read(final Element node) {
 		Conversation c = new Conversation();
 		c.name = node.getAttribute("name");
-		c.In = node.getAttribute("In");
-		c.Out = node.getAttribute("Out");
+		c.in = node.getAttribute("In");
+		c.out = node.getAttribute("Out");
 		NodeList nodes = node.getChildNodes();
-        for(int o = 0; o < nodes.getLength(); o++) {
+        for (int o = 0; o < nodes.getLength(); o++) {
         	Node oNode = nodes.item(o);
         	if (oNode.getNodeType() == Node.ELEMENT_NODE) {
         		Element eElement = (Element) oNode;
-        		if(eElement.getTagName().equals("option")) {
+        		if (eElement.getTagName().equals("option")) {
         			String key = eElement.getAttribute("value");
         			String value = eElement.getAttribute("text");
         			c.options.put(key, value);
         		}
-        		if(eElement.getTagName().equals("action")) {
-        			ConversationAction a = ConversationAction.Read(eElement);
+        		if (eElement.getTagName().equals("action")) {
+        			ConversationAction a = ConversationAction.read(eElement);
         			c.actions.add(a);
         		}
         	}
@@ -113,7 +112,7 @@ public class Conversation {
 	 * @param option The option
 	 * @return True if present
 	 */
-	public boolean hasOption(String option) {
+	public final boolean hasOption(final String option) {
 		return options.containsKey(option);
 	}
 

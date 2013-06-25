@@ -43,25 +43,28 @@ public class Quest {
 	 * 
 	 * @return Name
 	 */
-	public String getName() {
+	public final String getName() {
 		return name;
 	}
     /**
      * 
      * @return Description
      */
-	public String getDescription() {
+	public final String getDescription() {
 		return description;
 	}
     /**
      * @param method Method to perform
      * @return Output
      */
-	public String perform(String method) {
-		if(method.equals("start")) {
-			if(Game.getGame().getPlayerQuestStatus(this) == null || Game.getGame().getPlayerQuestStatus(this) == Quest.Status.AVAILABLE) {
-				Game.getGame().setPlayerQuestStatus(this,Quest.Status.STARTED);
-				return "Started quest: "+title+"\n";
+	public final String perform(final String method) {
+		if (method.equals("start")) {
+			if (Game.getGame().getPlayerQuestStatus(this) == null
+			        || Game.getGame().getPlayerQuestStatus(this)
+			            == Quest.Status.AVAILABLE) {
+				Game.getGame().setPlayerQuestStatus(this,
+				        Quest.Status.STARTED);
+				return "Started quest: " + title + "\n";
 			}
 		}
 		return null;
@@ -70,7 +73,7 @@ public class Quest {
      * @param node Node
      * @return Quest
      */
-	public static Quest Read(Element node) {
+	public static Quest read(final Element node) {
 		Quest q = new Quest();
 		q.name = node.getAttribute("name");
 		q.title = node.getAttribute("title");
@@ -80,7 +83,7 @@ public class Quest {
      * 
      * @return Title
      */
-	public String getTitle() {
+	public final String getTitle() {
 		return title;
 	}
 }
