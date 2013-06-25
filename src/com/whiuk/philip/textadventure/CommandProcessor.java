@@ -18,19 +18,19 @@ public class CommandProcessor {
     /**
      *
      */
-	protected static GUI gui;
+	protected static TAGScreen screen;
     /**
      *
      */
 	private static Game game;
 	/**
 	 * @param g Game
-	 * @param g2 GUI
+	 * @param s GUI
 	 * @param command Command to process
 	 * @param more Further text
 	 */
-	public static void process(final Game g, final GUI g2, final String command, final String more) {
-		gui = g2;
+	public static void process(final Game g, final TAGScreen s, final String command, final String more) {
+		screen = s;
 		game = g;
 		if (command.equals("HELP")) {
             processHelp(more);
@@ -59,7 +59,7 @@ public class CommandProcessor {
         } else if (command.equals("STATS") || command.equals("STATISTICS")) {
         	processStats(more);
         } else {
-            gui.addMessageLine("Action Not Found");
+            screen.addMessageLine("Action Not Found");
         }
 	}
 
@@ -69,72 +69,72 @@ public class CommandProcessor {
 	 */
 	protected static void processHelp(final String input) {
         if (input.equals("")) {
-            gui.addMessageLine("A list of commands follows. "
+            screen.addMessageLine("A list of commands follows. "
                     + "For details on each one, type 'HELP [COMMAND]' accordingly. "
                     + "Parameters in < > are mandatory, those in [ ] are optional");
-            gui.addMessageLine("HELP [COMMAND]");
-            gui.addMessageLine("LOAD <FILE>");
-            gui.addMessageLine("START");
-            gui.addMessageLine("MOVE <COMPASS POINT>");
-            gui.addMessageLine("INVENTORY, EQUIPMENT, DROP <ITEM NAME>, "
+            screen.addMessageLine("HELP [COMMAND]");
+            screen.addMessageLine("LOAD <FILE>");
+            screen.addMessageLine("START");
+            screen.addMessageLine("MOVE <COMPASS POINT>");
+            screen.addMessageLine("INVENTORY, EQUIPMENT, DROP <ITEM NAME>, "
                     + "TAKE <ITEM NAME>, EQUIP <ITEM NAME>, "
                     + "UNEQUIP <ITEM NAME>, EXAMINE <ITEM NAME>, "
                     + "STATS [ITEM NAME]");
-            gui.addMessageLine("TALK <NPC NAME> [OPTION], EXAMINE <NPC NAME>");
-            gui.addMessageLine("QUESTS");
+            screen.addMessageLine("TALK <NPC NAME> [OPTION], EXAMINE <NPC NAME>");
+            screen.addMessageLine("QUESTS");
         } else {
             String[] iArr = input.split(" ");
             String command = iArr[0];
             switch(command) {
                 case "HELP":
-                    gui.addMessageLine(
+                    screen.addMessageLine(
                             "HELP provides a list of commands and their "
                             + "parameters along with explanations of usage");
                     break;
                 case "LOAD":
-                gui.addMessageLine("LOAD is used to load a scenario.");
+                screen.addMessageLine("LOAD is used to load a scenario.");
                 break;
             case "START":
-                gui.addMessageLine("START is used to play a new game.");
+                screen.addMessageLine("START is used to play a new game.");
                 break;
             case "MOVE":
-                gui.addMessageLine(
+                screen.addMessageLine(
                         "MOVE allows the player to travel between locations. "
                         + "Note that not all connections are two-way. "
                         + "Available directions of movement are given when "
                         + "arriving at a location.");
                 break;
             case "INVENTORY":
-                gui.addMessageLine("INVENTORY allows the player to view any items they are carrying.");
+                screen.addMessageLine("INVENTORY allows the player to view any items they are carrying.");
                 break;
             case "EQUIPMENT":
-                gui.addMessageLine("EQUIPMENT allows the player to see any items they have equipped.");
+                screen.addMessageLine("EQUIPMENT allows the player to see any items they have equipped.");
                 break;
             case "DROP":
-                gui.addMessageLine("DROP allows the player to place an item at a location.");
+                screen.addMessageLine("DROP allows the player to place an item at a location.");
                 break;
             case "TAKE":
-                gui.addMessageLine("TAKE allows the player to pickup an item from a location.");
+                screen.addMessageLine("TAKE allows the player to pickup an item from a location.");
                 break;
             case "EQUIP":
-                gui.addMessageLine("EQUIP allows the player to wield/wear an "
+                screen.addMessageLine("EQUIP allows the player to wield/wear an "
                         + "item that they are carrying. Any existing equipped "
                         + "item in the same slot will be unequipped automatically.");
                 break;
             case "UNEQUIP":
-                gui.addMessageLine("UNEQUIP allows the player to remove an item "
+                screen.addMessageLine("UNEQUIP allows the player to remove an item "
                         + "that they have equipped and carry it instead.");
                 break;
             case "STATS":
-                gui.addMessageLine("STATS allows the player to examine their "
+                screen.addMessageLine("STATS allows the player to examine their "
                         + "overall defensive/offensive capabilities as well per item.");
                 break;
             case "EXAMINE":
-                gui.addMessageLine("EXAMINE allows the player to "
+                screen.addMessageLine("EXAMINE allows the player to "
                         + "view a description of the NPC or item.");
                 break;
             case "TALK":
-                gui.addMessageLine("TALK allows the player to communicate"
+                screen.addMessageLine("TALK allows the player to communicate"
                         + "with an NPC. When in a conversation they "
                         + "may be able to choose from multiple options "
                         + "to proceed with the conversation - these "
@@ -142,7 +142,7 @@ public class CommandProcessor {
                         + "parameter.");
                 break;
             case "QUESTS":
-                gui.addMessageLine("QUESTS allows the player to view a "
+                screen.addMessageLine("QUESTS allows the player to view a "
                         + "list of quests they have been told about, "
                         + "started and completed.");
                 break;
@@ -157,10 +157,10 @@ public class CommandProcessor {
     	Iterator<Entry<String, Item>> i = game.getInventory().entrySet().iterator();
     	if (i.hasNext()) {
             while (i.hasNext()) {
-            	gui.addMessageLine(i.next().getValue().getTitle());
+            	screen.addMessageLine(i.next().getValue().getTitle());
             }
         } else {
-            gui.addMessageLine("None");
+            screen.addMessageLine("None");
         }
     }
     /**
@@ -171,9 +171,9 @@ public class CommandProcessor {
         if (game.getLocation().hasItem(item)) {
         	Item i = game.getLocation().takeItem(item);
         	game.getInventory().put(item, i);
-            gui.addMessageLine("Picked up: " + i.getTitle());
+            screen.addMessageLine("Picked up: " + i.getTitle());
         } else {
-        	gui.addMessageLine("No such item: " + item);
+        	screen.addMessageLine("No such item: " + item);
         }
     }
     /**
@@ -184,9 +184,9 @@ public class CommandProcessor {
         if (game.getInventory().containsKey(item)) {
         	Item i = game.getInventory().remove(item);
         	game.getLocation().dropItem(i);
-        	gui.addMessageLine("Dropped: " + i.getTitle());
+        	screen.addMessageLine("Dropped: " + i.getTitle());
         } else {
-        	gui.addMessageLine("No such item: " + item);
+        	screen.addMessageLine("No such item: " + item);
         }
     }
     /**
@@ -199,10 +199,10 @@ public class CommandProcessor {
             if (game.getLocation().hasExit(d)) {
                 game.move(game.getLocations().get(game.getLocation().getExit(d).location));
             } else {
-                gui.addMessageLine("Unable to move that way");
+                screen.addMessageLine("Unable to move that way");
             }
         } catch (IllegalArgumentException iae) {
-            gui.addMessageLine("Direction Not Found");
+            screen.addMessageLine("Direction Not Found");
         }
     }
     /**
@@ -211,9 +211,9 @@ public class CommandProcessor {
      */
     private static void processExamine(final String item) {
     	if (game.getLocation().hasItem(item)) {
-    		gui.addMessageLine(game.getLocation().infoItem(item).getDescription());
+    		screen.addMessageLine(game.getLocation().infoItem(item).getDescription());
     	} else if (game.getInventory().containsKey(item)) {
-    		gui.addMessageLine(game.getInventory().get(item).getDescription());
+    		screen.addMessageLine(game.getInventory().get(item).getDescription());
     	}
     }
     /**
@@ -229,12 +229,12 @@ public class CommandProcessor {
     			if (i2 != null) {
     				game.getInventory().put(i2.getName(), i2);
     			}
-    			gui.addMessageLine("Equipped: " + i.getTitle());
+    			screen.addMessageLine("Equipped: " + i.getTitle());
     		} else {
-    			gui.addMessageLine("That item can't be equipped.");
+    			screen.addMessageLine("That item can't be equipped.");
     		}
     	} else {
-    		gui.addMessageLine("Not carrying: " + item);
+    		screen.addMessageLine("Not carrying: " + item);
     	}
     }
     /**
@@ -245,9 +245,9 @@ public class CommandProcessor {
     	if (game.getEquipment().containsKey(slot) && game.getEquipment().get(slot) != null) {
     		Item i = game.getEquipment().put(slot, null);
     		game.getInventory().put(i.getName(), i);
-    		gui.addMessageLine("Unequipped: " + i.getTitle());
+    		screen.addMessageLine("Unequipped: " + i.getTitle());
     	} else {
-    		gui.addMessageLine("No item was equipped in: " + slot);
+    		screen.addMessageLine("No item was equipped in: " + slot);
     	}
     }
     /**
@@ -259,10 +259,10 @@ public class CommandProcessor {
     	if (i.hasNext()) {
             while (i.hasNext()) {
             	Entry<String, Item> e = i.next();
-                gui.addMessageLine(e.getKey() + ": " + e.getValue().getTitle());
+                screen.addMessageLine(e.getKey() + ": " + e.getValue().getTitle());
             }
         } else {
-            gui.addMessageLine("None");
+            screen.addMessageLine("None");
         }
     }
     /**
@@ -273,12 +273,12 @@ public class CommandProcessor {
     	String[] split = more.split(" ", 2);
     	if (game.getLocation().hasNPC(split[0])) {
     		if (split.length > 1) {
-    			gui.addMessageLine(game.getLocation().getNPC(split[0]).doTalk(split[1]));
+    			screen.addMessageLine(game.getLocation().getNPC(split[0]).doTalk(split[1]));
     		} else {
-    			gui.addMessageLine(game.getLocation().getNPC(split[0]).doTalk(""));
+    			screen.addMessageLine(game.getLocation().getNPC(split[0]).doTalk(""));
     		}
     	} else {
-    		gui.addMessageLine("That NPC does not exist here.");
+    		screen.addMessageLine("That NPC does not exist here.");
     	}
     }
     /**
@@ -297,10 +297,10 @@ public class CommandProcessor {
     	if (i.hasNext()) {
             while (i.hasNext()) {
             	Entry<Quest, Status> e = i.next();
-                gui.addMessageLine(e.getKey().getTitle() + ": " + e.getValue().toString());
+                screen.addMessageLine(e.getKey().getTitle() + ": " + e.getValue().toString());
             }
         } else {
-            gui.addMessageLine("None");
+            screen.addMessageLine("None");
         }
     }
     /**
@@ -330,10 +330,10 @@ public class CommandProcessor {
 	    	if (k.hasNext()) {
 	    		while (k.hasNext()) {
 	    			Entry<String, Integer> s = k.next();
-	    			gui.addMessageLine(s.getKey() + ": " + s.getValue());
+	    			screen.addMessageLine(s.getKey() + ": " + s.getValue());
 	    		}
 	    	} else {
-	            gui.addMessageLine("No offensive/defensive bonuses");
+	            screen.addMessageLine("No offensive/defensive bonuses");
 	        }
     	}
 	}

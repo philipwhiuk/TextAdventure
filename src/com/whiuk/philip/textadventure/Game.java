@@ -68,24 +68,24 @@ public class Game {
 	}
 	/**
 	 * 
-	 * @param app
+	 * @param container
 	 * @param url
 	 * @param filename
 	 * @return
 	 */
-    protected static Game load(final TAGApplet app, final URL url, final String filename) {
+    protected static Game load(final TAGContainer container, final URL url, final String filename) {
     	InputStream is = Game.class.getResourceAsStream(filename);
     	if (is != null) {  
 	    	try {
-		        GUI gui = (GUI) app.getScreen();
+		        TAGScreen screen = container.getScreen();
 		        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 		        Document doc = dBuilder.parse(is);
 		        doc.getDocumentElement().normalize();
 		        Element gNode = doc.getDocumentElement();
 		        if (gNode.getAttribute("version").equalsIgnoreCase(Game.fileVersion)) {
-		        	Game g = read(gui, gNode);
-			        gui.addMessageLine("Loaded: " + g.name);
+		        	Game g = read(screen, gNode);
+			        screen.addMessageLine("Loaded: " + g.name);
 			        return g;
 		        }
 	    	} catch (Exception e) {
@@ -96,14 +96,14 @@ public class Game {
     }
     /**
      * 
-     * @param gui
+     * @param screen
      * @param gNode
      * @return
      * @throws IOException
      * @throws GameFileException
      */
-    private static Game read(final GUI gui, final Element gNode) throws IOException, GameFileException {
-        Game g = new Game(gui);
+    private static Game read(final TAGScreen screen, final Element gNode) throws IOException, GameFileException {
+        Game g = new Game((GUI) screen);
         g.startLocation = Integer.parseInt(gNode.getAttribute("startLocation"));
         g.name = gNode.getAttribute("name");
         
@@ -141,7 +141,7 @@ public class Game {
     /**
      * 
      */
-    private GUI gui;
+    private TAGScreen gui;
     // Game Data;
     /**
      * 

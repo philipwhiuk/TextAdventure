@@ -11,7 +11,7 @@ import java.net.URL;
  *
  * @author Philip
  */
-public class GUI extends TAGPanel implements ActionListener {
+public class GUI extends TAGScreen implements ActionListener {
     /**
      * 
      */
@@ -68,9 +68,9 @@ public class GUI extends TAGPanel implements ActionListener {
                 + "commands.\n");
         output.append("Current Scenarios:\nAtlendor: game.xml\n");
         input.addActionListener(this);
-        add(output, BorderLayout.CENTER);        
+        add(output, BorderLayout.CENTER);
         add(input, BorderLayout.SOUTH);
-        input.requestFocus();        
+        input.requestFocus();
     }
     @Override
     public final void actionPerformed(final ActionEvent e) {
@@ -102,13 +102,13 @@ public class GUI extends TAGPanel implements ActionListener {
         		if (iArr[0].equalsIgnoreCase("LOAD")) {
         			loadGame(iArr[1]);
         		} else if (iArr[0].equalsIgnoreCase("HELP")) {
-        			CommandProcessor.gui = this;
+        			CommandProcessor.screen = this;
         			CommandProcessor.processHelp(iArr[1]);
         		} else {
             		addMessageLine("Action Not Found"); 
             	}
         	} else if (iArr[0].equalsIgnoreCase("HELP")) {
-    			CommandProcessor.gui = this;        		
+    			CommandProcessor.screen = this;        		
         		CommandProcessor.processHelp("");
         	} else {
         		addMessageLine("Action Not Found"); 
@@ -116,10 +116,7 @@ public class GUI extends TAGPanel implements ActionListener {
         }
     }
 
-    /**
-     * 
-     * @param string
-     */
+    @Override
     final void addMessageLine(final String string) {
         output.append(string + "\n");
     }

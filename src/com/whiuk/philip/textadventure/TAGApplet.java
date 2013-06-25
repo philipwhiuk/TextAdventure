@@ -10,7 +10,7 @@ import java.applet.Applet;
  *
  * @author Philip
  */
-public class TAGApplet extends Applet {
+public class TAGApplet extends Applet implements TAGContainer {
     /**
      * 
      */
@@ -18,7 +18,7 @@ public class TAGApplet extends Applet {
     /**
      * 
      */
-    private TAGPanel screen;
+    private TAGScreen screen;
     @Override
     public final void init() {
     	screen = new GUI(this, this.getCodeBase());
@@ -30,11 +30,9 @@ public class TAGApplet extends Applet {
      */
     public void start() {
     }
-    /**
-     * 
-     * @return Screen
-     */
-    public final TAGPanel getScreen() {
+
+    @Override
+    public final TAGScreen getScreen() {
     	return screen;
     }
 }

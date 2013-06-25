@@ -10,7 +10,7 @@ import java.awt.Panel;
  *
  * @author Philip
  */
-public abstract class TAGPanel extends Panel {
+public abstract class TAGScreen extends Panel {
     /**
      * 
      */
@@ -21,4 +21,10 @@ public abstract class TAGPanel extends Panel {
 	 * @param string
 	 */
 	abstract void setErrorMessage(String string);
+
+	/**
+	 * 
+	 * @param startText
+	 */
+    abstract void addMessageLine(String startText);
 }
