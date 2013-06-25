@@ -2,9 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package textadventure;
+package com.whiuk.philip.textadventure;
 
-import textadventure.Game.GameFileException;
+import com.whiuk.philip.textadventure.Game.GameFileException;
 
 /**
  *

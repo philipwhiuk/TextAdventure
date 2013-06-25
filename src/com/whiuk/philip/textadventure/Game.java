@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package textadventure;
+package com.whiuk.philip.textadventure;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,7 +19,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
-import textadventure.Quest.Status;
+import com.whiuk.philip.textadventure.Quest.Status;
+
 
 /**
  *

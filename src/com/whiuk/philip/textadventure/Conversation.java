@@ -1,4 +1,4 @@
-package textadventure;
+package com.whiuk.philip.textadventure;
 
 import java.util.ArrayList;
 import java.util.HashMap;

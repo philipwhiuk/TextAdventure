@@ -1,11 +1,12 @@
-package textadventure;
+package com.whiuk.philip.textadventure;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
-import textadventure.Exit.Direction;
-import textadventure.Quest.Status;
+import com.whiuk.philip.textadventure.Exit.Direction;
+import com.whiuk.philip.textadventure.Quest.Status;
+
 
 /**
  * Processes game commands.

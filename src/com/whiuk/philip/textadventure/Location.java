@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package textadventure;
+package com.whiuk.philip.textadventure;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -13,8 +13,9 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
-import textadventure.Exit.Direction;
-import textadventure.Game.GameFileException;
+import com.whiuk.philip.textadventure.Exit.Direction;
+import com.whiuk.philip.textadventure.Game.GameFileException;
+
 /**
  *
  * @author Philip

@@ -1,4 +1,4 @@
-package textadventure;
+package com.whiuk.philip.textadventure;
 
 import org.w3c.dom.Element;
 
