@@ -2,5 +2,8 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.apache.ivyde.eclipse.cpcontainer.IVYDE_CONTAINER/?project=TextAdventure&amp;ivyXmlPath=ivy.xml&amp;confs=test"/>
+	<classpathentry kind="con" path="org.apache.ivyde.eclipse.cpcontainer.IVYDE_CONTAINER/?project=TextAdventure&amp;ivyXmlPath=ivy.xml&amp;confs=build"/>
+	<classpathentry kind="con" path="org.apache.ivyde.eclipse.cpcontainer.IVYDE_CONTAINER/?project=TextAdventure&amp;ivyXmlPath=ivy.xml&amp;confs=test-runtime"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
