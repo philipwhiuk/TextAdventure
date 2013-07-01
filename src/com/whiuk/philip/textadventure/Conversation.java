@@ -55,27 +55,39 @@ public class Conversation {
 	 */
 	public final String doTalk(final String string) {
 		//TODO: Complex Conversation Actions
-		String conversation = "Player:" + in + "\n" + "NPC:" + out + "\n";
+	    StringBuilder conversation = new StringBuilder();
+	    conversation.append("Player:");
+	    conversation.append(in);
+	    conversation.append(System.getProperty("line.separator"));
+	    conversation.append("NPC:");
+	    conversation.append(out);
+	    conversation.append(System.getProperty("line.separator"));
 
 		Iterator<ConversationAction> ia = actions.iterator();
 		if (ia.hasNext()) {
 			while (ia.hasNext()) {
 				ConversationAction a = ia.next();
-				conversation += a.doAction();
+				conversation.append(a.doAction());
 			}
 		}
 
 		Set<Entry<String, String>> set = options.entrySet();
 		Iterator<Entry<String, String>> io = set.iterator();
 		if (io.hasNext()) {
-			conversation += "\n+Options:\n";
+		    conversation.append(System.getProperty("line.separator"));
+		    conversation.append("Options:");
+            conversation.append(System.getProperty("line.separator"));
 			while (io.hasNext()) {
 				Entry<String, String> option = io.next();
-				conversation += option.getKey() + ") " + option.getValue() + "\n";
+				conversation.append(option.getKey());
+				conversation.append(") ");
+				conversation.append(option.getValue());
+				conversation.append(
+				        System.getProperty("line.separator"));
 			}
 		}
-		NPC.lastConversation = this;
-		return conversation;
+		Game.getGame().setLastConversation(this);
+		return conversation.toString();
 	}
 
 	/**

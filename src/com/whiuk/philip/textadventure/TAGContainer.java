@@ -6,6 +6,6 @@ public interface TAGContainer {
      * 
      * @return
      */
-    TAGScreen getScreen();
+    UI getScreen();
 
 }

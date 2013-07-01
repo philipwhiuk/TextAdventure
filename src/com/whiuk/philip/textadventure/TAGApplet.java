@@ -18,7 +18,7 @@ public class TAGApplet extends Applet implements TAGContainer {
     /**
      * 
      */
-    private TAGScreen screen;
+    private UI screen;
     @Override
     public final void init() {
     	screen = new GUI(this, this.getCodeBase());
@@ -32,7 +32,7 @@ public class TAGApplet extends Applet implements TAGContainer {
     }
 
     @Override
-    public final TAGScreen getScreen() {
+    public final UI getScreen() {
     	return screen;
     }
 }

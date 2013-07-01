@@ -10,7 +10,7 @@ import java.awt.Panel;
  *
  * @author Philip
  */
-public abstract class TAGScreen extends Panel {
+public abstract class UI extends Panel {
     /**
      * 
      */

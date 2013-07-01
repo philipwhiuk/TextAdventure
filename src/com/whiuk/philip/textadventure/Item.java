@@ -78,42 +78,42 @@ class Item {
     }
     /**
      * 
-     * @return
+     * @return name
      */
 	public String getName() {
 		return name;
 	}
 	/**
 	 * 
-	 * @return
+	 * @return title
 	 */
 	public String getTitle() {
 		return title;
 	}
 	/**
 	 * 
-	 * @return
+	 * @return description
 	 */
 	public String getDescription() {
 		return description;
 	}
 	/**
 	 *
-	 * @return
+	 * @return whether it can be equipped
 	 */
 	public boolean canEquip() {
 		return isEquippable;
 	}
 	/**
 	 * 
-	 * @return
+	 * @return slot
 	 */
 	public String getSlot() {
 		return slot;
 	}
 	/**
 	 * 
-	 * @return
+	 * @return statistics
 	 */
 	public HashMap<String, Integer> getStats() {
 		return statistics;

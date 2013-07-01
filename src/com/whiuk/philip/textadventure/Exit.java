@@ -75,8 +75,8 @@ class Exit {
     int location;
     /**
      * 
-     * @param l
-     * @param d
+     * @param l location
+     * @param d direction
      * @throws GameFileException
      */
     Exit(final String l, final String d) throws GameFileException {

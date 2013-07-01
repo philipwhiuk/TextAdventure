@@ -18,7 +18,7 @@ public class CommandProcessor {
     /**
      *
      */
-	protected static TAGScreen screen;
+	protected static UI screen;
     /**
      *
      */
@@ -29,7 +29,7 @@ public class CommandProcessor {
 	 * @param command Command to process
 	 * @param more Further text
 	 */
-	public static void process(final Game g, final TAGScreen s, final String command, final String more) {
+	public static void process(final Game g, final UI s, final String command, final String more) {
 		screen = s;
 		game = g;
 		if (command.equals("HELP")) {

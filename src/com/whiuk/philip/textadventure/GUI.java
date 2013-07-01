@@ -11,7 +11,7 @@ import java.net.URL;
  *
  * @author Philip
  */
-public class GUI extends TAGScreen implements ActionListener {
+public class GUI extends UI implements ActionListener {
     /**
      * 
      */

@@ -13,11 +13,6 @@ import org.w3c.dom.Text;
  *
  */
 public class NPC {
-    // TODO: Move this
-    /**
-     * 
-     */
-    static Conversation lastConversation;
 
     /**
      * 
@@ -81,33 +76,45 @@ public class NPC {
 	public static NPC read(final Element node) {
 		NPC n = new NPC();
 		n.name = node.getAttribute("name");
-		n.isAttackable = Boolean.parseBoolean(node.getAttribute("isAttackable"));
-		n.isTalkable = Boolean.parseBoolean(node.getAttribute("isTalkable"));
-		n.defaultCon = node.getAttribute("defaultCon");    
+		n.isAttackable = Boolean.parseBoolean(
+		        node.getAttribute("isAttackable"));
+		n.isTalkable = Boolean.parseBoolean(
+		        node.getAttribute("isTalkable"));
+		n.defaultCon = node.getAttribute("defaultCon");
 		NodeList nodes = node.getChildNodes();
         for (int i = 0; i < nodes.getLength(); i++) {
         	Node nNode = nodes.item(i);
         	if (nNode.getNodeType() == Node.ELEMENT_NODE) {
         		Element eElement = (Element) nNode;
-        		if (eElement.getTagName().equals("description")) {
-        			n.description = ((Text) eElement.getFirstChild()).getData();        			
-        		} else if (eElement.getTagName().equals("conversations")) {
-        			for (int e = 0; e < eElement.getChildNodes().getLength(); e++) {
-        				if (eElement.getChildNodes().item(e).getNodeType() == Node.ELEMENT_NODE) {
-	        				Element exElement = (Element) eElement.getChildNodes().item(e);
-	        				Conversation c = Conversation.read(exElement);
-	        				n.add(c.name, c);
-        				}
-        			}
-        		}
+                readChild(n, eElement);
         	}
         }
 		return n;
 	}
 	/**
-	 * 
-	 * @param key
-	 * @param c
+	 * Read a child node.
+	 * @param n NPC to read data into
+	 * @param eElement Element to read from.
+	 */
+	private static void readChild(final NPC n, final Element eElement) {
+        if (eElement.getTagName().equals("description")) {
+            n.description = ((Text) eElement.getFirstChild()).getData();
+        } else if (eElement.getTagName().equals("conversations")) {
+            for (int e = 0; e < eElement.getChildNodes().getLength(); e++) {
+                if (eElement.getChildNodes().item(e)
+                        .getNodeType() == Node.ELEMENT_NODE) {
+                    Element exElement = (Element) eElement.getChildNodes()
+                            .item(e);
+                    Conversation c = Conversation.read(exElement);
+                    n.add(c.name, c);
+                }
+            }
+        }
+    }
+    /**
+	 * Add a conversation to the NPCs set.
+	 * @param key Key
+	 * @param c Conversation
 	 */
 	private void add(final String key, final Conversation c) {
 		cons.put(key, c);
@@ -119,12 +126,12 @@ public class NPC {
 	 */
 	public final String doTalk(final String string) {
 	    if (isTalkable) {
-    		if (lastConversation != null) {
-    			if (cons.containsValue(lastConversation)) {
-    				if (lastConversation.hasOption(string)) {
+    		if (Game.getGame().getLastConversation() != null
+    		        && cons.containsValue(Game.getGame()
+    			        .getLastConversation())
+			        && Game.getGame().getLastConversation()
+				        .hasOption(string)) {
     					return cons.get(string).doTalk(string);
-    				}
-    			}
     		}
     		return cons.get(defaultCon).doTalk(string);
 	    } else {
