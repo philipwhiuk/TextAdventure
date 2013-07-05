@@ -45,7 +45,7 @@ class Item {
 	 * 
 	 * @param node
 	 * @return
-	 * @throws IOException
+	 * @throws IOException Exception
 	 */
     static Item read(final Element node) throws IOException {
         Item i = new Item();
@@ -59,11 +59,13 @@ class Item {
         	if (oNode.getNodeType() == Node.ELEMENT_NODE) {
         		Element eElement = (Element) oNode;
         		if (eElement.getTagName().equals("description")) {
-        			i.description = eElement.getChildNodes().item(0).getTextContent();
+        			i.description = eElement.getChildNodes()
+        			        .item(0).getTextContent();
         		} else if (eElement.getTagName().equals("statistics")) {
         			NamedNodeMap map = eElement.getAttributes();
         			for (int a = 0; a < map.getLength(); a++) {
-        				statistics.put(map.item(a).getNodeName(), Integer.parseInt(map.item(a).getNodeValue()));
+        				statistics.put(map.item(a).getNodeName(),
+        				        Integer.parseInt(map.item(a).getNodeValue()));
         			}
         		}
         	}

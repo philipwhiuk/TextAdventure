@@ -24,7 +24,7 @@ class Exit {
         private static final long serialVersionUID = 1L;
         /**
          * 
-         * @param message
+         * @param message Message
          * @param e
          */
         InvalidDirectionGameFileException(final String message, final Exception e) {
@@ -68,24 +68,44 @@ class Exit {
     /**
      * 
      */
-    Direction direction;
+    private Direction direction;
     /**
      * 
      */
-    int location;
+    private int location;
     /**
      * 
      * @param l location
      * @param d direction
-     * @throws GameFileException
+     * @throws GameFileException Exception
      */
     Exit(final String l, final String d) throws GameFileException {
         this.location = Integer.parseInt(l);
         try {
-            this.direction = Direction.valueOf(d);
+            this.setDirection(Direction.valueOf(d));
         } catch (IllegalArgumentException iae) {
-            throw new InvalidDirectionGameFileException("Exit.Direction." + d + " doesn't exist", iae);
+            throw new InvalidDirectionGameFileException(
+                    "Exit.Direction." + d + " doesn't exist", iae);
         }
+    }
+
+    /**
+     * @return the location
+     */
+    public int getLocation() {
+        return location;
+    }
+    /**
+     * @return the direction
+     */
+    public Direction getDirection() {
+        return direction;
+    }
+    /**
+     * @param direction the direction to set
+     */
+    public void setDirection(final Direction direction) {
+        this.direction = direction;
     }
     
 }

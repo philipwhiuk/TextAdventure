@@ -39,7 +39,7 @@ public class Game {
         private static final long serialVersionUID = 1L;
         /**
          * 
-         * @param message
+         * @param message Message
          * @param e
          */
         GameFileException(final String message, final Exception e) {
@@ -47,9 +47,9 @@ public class Game {
         }
     }
     /**
-     * File Version
+     * File Version.
      */
-    protected static String fileVersion = "1.0";
+    private static final String FILE_VERSION = "1.0";
     /**
      * 
      */
@@ -87,7 +87,7 @@ public class Game {
 		        doc.getDocumentElement().normalize();
 		        Element gNode = doc.getDocumentElement();
 		        if (gNode.getAttribute("version")
-		                .equalsIgnoreCase(Game.fileVersion)) {
+		                .equalsIgnoreCase(Game.FILE_VERSION)) {
 		        	Game g = read(screen, gNode);
 			        screen.addMessageLine("Loaded: " + g.name);
 			        return g;
@@ -284,9 +284,9 @@ public class Game {
 	}
     /**
      * 
-     * @param g GUI
+     * @param i UI
      */
-    protected final void setGUI(final UI i) {
+    protected final void setUI(final UI i) {
         this.ui = i;
     }
     /**

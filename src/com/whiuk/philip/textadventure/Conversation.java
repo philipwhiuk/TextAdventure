@@ -19,27 +19,27 @@ public class Conversation {
     /**
      * The conversation name.
      */
-	public String name;
+	private String name;
 	/**
 	 * In.
 	 */
-	public String in;
+	private String in;
 	/**
 	 * Out.
 	 */
-	public String out;
+	private String out;
 	/**
 	 * Options.
 	 */
-	public HashMap<String, String> options;
+	private HashMap<String, String> options;
 	/**
 	 * Actions.
 	 */
-	public ArrayList<ConversationAction> actions;
+	private ArrayList<ConversationAction> actions;
 	/**
 	 * The NPC associated with the conversation.
 	 */
-	public NPC npc;
+	private NPC npc;
 	/**
 	 * Default constructor.
 	 */
@@ -97,7 +97,7 @@ public class Conversation {
 	 */
 	public static Conversation read(final Element node) {
 		Conversation c = new Conversation();
-		c.name = node.getAttribute("name");
+		c.setName(node.getAttribute("name"));
 		c.in = node.getAttribute("In");
 		c.out = node.getAttribute("Out");
 		NodeList nodes = node.getChildNodes();
@@ -127,5 +127,19 @@ public class Conversation {
 	public final boolean hasOption(final String option) {
 		return options.containsKey(option);
 	}
+
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * @param name the name to set
+     */
+    public void setName(final String name) {
+        this.name = name;
+    }
 
 }

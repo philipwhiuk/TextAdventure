@@ -39,32 +39,49 @@ class Location {
         	Node nNode = nodes.item(n);
         	if (nNode.getNodeType() == Node.ELEMENT_NODE) {
         		Element eElement = (Element) nNode;
-        		if (eElement.getTagName().equals("description")) {
-        			l.description = ((Text) eElement.getFirstChild()).getData();        			
-        		} else if (eElement.getTagName().equals("exits")) {
-        			for (int e = 0; e < eElement.getChildNodes().getLength(); e++) {
-        				if (eElement.getChildNodes().item(e).getNodeType() == Node.ELEMENT_NODE) {
-	        				Element exElement = (Element) eElement.getChildNodes().item(e);
-	        				Exit ex = new Exit(exElement.getAttribute("room"), exElement.getAttribute("direction"));
-	        				l.add(ex.direction, ex);
-        				}
-        			}
-        		} else if (eElement.getTagName().equals("items")) {
-        			for (int i = 0; i < eElement.getChildNodes().getLength(); i++) {
-        				if (eElement.getChildNodes().item(i).getNodeType() == Node.ELEMENT_NODE) {
-	        				Element iElement = (Element) eElement.getChildNodes().item(i);
-	        				Item it = Item.read(iElement);
-	        				l.add(it.getName(), it);
-        				}
-        			}
-        		} else if (eElement.getTagName().equals("npcs")) {
-        			for (int m = 0; m < eElement.getChildNodes().getLength(); m++) {
-        				if (eElement.getChildNodes().item(m).getNodeType() == Node.ELEMENT_NODE) {
-	        				Element iElement = (Element) eElement.getChildNodes().item(m);
-	        				NPC npc = NPC.read(iElement);
-	        				l.add(npc.getName(), npc);
-        				}
-        			}
+        		NodeList cNodes;
+                switch (eElement.getTagName()) {
+        		    case "description":
+        		        l.description =
+        		            ((Text) eElement.getFirstChild()).getData();
+        		        break;
+        		    case "exits":
+        		        cNodes = eElement.getChildNodes();
+            		    for (int e = 0; e < cNodes.getLength(); e++) {
+                            if (cNodes.item(e).getNodeType()
+                                    == Node.ELEMENT_NODE) {
+                                Element exElement = (Element) cNodes.item(e);
+                                String r = exElement.getAttribute("room");
+                                String d = exElement.getAttribute("direction");
+                                Exit ex = new Exit(r, d);
+                                l.add(ex.getDirection(), ex);
+                            }
+                        }
+            		    break;
+        		    case "items":
+        		        cNodes = eElement.getChildNodes();
+        		        for (int i = 0; i < cNodes.getLength(); i++) {
+                            if (cNodes.item(i).getNodeType()
+                                    == Node.ELEMENT_NODE) {
+                                Element iElement = (Element) cNodes.item(i);
+                                Item it = Item.read(iElement);
+                                l.add(it.getName(), it);
+                            }
+                        }
+        		        break;
+        		    case "npcs":
+                        cNodes = eElement.getChildNodes();
+        		        for (int m = 0; m < cNodes.getLength(); m++) {
+                            if (cNodes.item(m).getNodeType()
+                                    == Node.ELEMENT_NODE) {
+                                Element iElement = (Element) cNodes.item(m);
+                                NPC npc = NPC.read(iElement);
+                                l.add(npc.getName(), npc);
+                            }
+                        }
+        		        break;
+                    default:
+                        throw new RuntimeException();
         		}
         	}
         }

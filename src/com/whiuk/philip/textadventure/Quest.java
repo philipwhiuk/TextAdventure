@@ -77,6 +77,7 @@ public class Quest {
 		Quest q = new Quest();
 		q.name = node.getAttribute("name");
 		q.title = node.getAttribute("title");
+		q.description = node.getChildNodes().item(0).getTextContent();
 		return q;
 	}
     /**

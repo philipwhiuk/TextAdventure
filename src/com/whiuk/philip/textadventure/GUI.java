@@ -102,13 +102,13 @@ public class GUI extends UI implements ActionListener {
         		if (iArr[0].equalsIgnoreCase("LOAD")) {
         			loadGame(iArr[1]);
         		} else if (iArr[0].equalsIgnoreCase("HELP")) {
-        			CommandProcessor.screen = this;
+        			CommandProcessor.setScreen(this);
         			CommandProcessor.processHelp(iArr[1]);
         		} else {
             		addMessageLine("Action Not Found"); 
             	}
         	} else if (iArr[0].equalsIgnoreCase("HELP")) {
-    			CommandProcessor.screen = this;        		
+    			CommandProcessor.setScreen(this);
         		CommandProcessor.processHelp("");
         	} else {
         		addMessageLine("Action Not Found"); 

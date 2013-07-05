@@ -16,9 +16,15 @@ import com.whiuk.philip.textadventure.Quest.Status;
 public class CommandProcessor {
 
     /**
+     * Utility class.
+     */
+    private CommandProcessor() {
+    }
+
+    /**
      *
      */
-	protected static UI screen;
+	private static UI screen;
     /**
      *
      */
@@ -105,16 +111,20 @@ public class CommandProcessor {
                         + "arriving at a location.");
                 break;
             case "INVENTORY":
-                screen.addMessageLine("INVENTORY allows the player to view any items they are carrying.");
+                screen.addMessageLine(
+                        "INVENTORY allows the player to view any items they are carrying.");
                 break;
             case "EQUIPMENT":
-                screen.addMessageLine("EQUIPMENT allows the player to see any items they have equipped.");
+                screen.addMessageLine(
+                        "EQUIPMENT allows the player to see any items they have equipped.");
                 break;
             case "DROP":
-                screen.addMessageLine("DROP allows the player to place an item at a location.");
+                screen.addMessageLine(
+                        "DROP allows the player to place an item at a location.");
                 break;
             case "TAKE":
-                screen.addMessageLine("TAKE allows the player to pickup an item from a location.");
+                screen.addMessageLine(
+                        "TAKE allows the player to pickup an item from a location.");
                 break;
             case "EQUIP":
                 screen.addMessageLine("EQUIP allows the player to wield/wear an "
@@ -146,6 +156,8 @@ public class CommandProcessor {
                         + "list of quests they have been told about, "
                         + "started and completed.");
                 break;
+            default:
+                throw new UnsupportedOperationException(command);
             }
         }
     }
@@ -197,7 +209,8 @@ public class CommandProcessor {
         try {
             Direction d = Exit.Direction.valueOf(direction);
             if (game.getLocation().hasExit(d)) {
-                game.move(game.getLocations().get(game.getLocation().getExit(d).location));
+                game.move(game.getLocations().get(
+                        game.getLocation().getExit(d).getLocation()));
             } else {
                 screen.addMessageLine("Unable to move that way");
             }
@@ -252,7 +265,7 @@ public class CommandProcessor {
     }
     /**
      * 
-     * @param more
+     * @param more Further text
      */
     private static void processEquipment(final String more) {
     	Iterator<Entry<String, Item>> i = game.getEquipment().entrySet().iterator();
@@ -267,7 +280,7 @@ public class CommandProcessor {
     }
     /**
      * 
-     * @param more
+     * @param more Further text
      */
     private static void processTalk(final String more) {
     	String[] split = more.split(" ", 2);
@@ -290,7 +303,7 @@ public class CommandProcessor {
     }
     /**
      * 
-     * @param more
+     * @param more Further text
      */
     private static void processQuests(final String more) {
     	Iterator<Entry<Quest, Status>> i = game.getPlayerQuests().entrySet().iterator();
@@ -305,27 +318,25 @@ public class CommandProcessor {
     }
     /**
      * 
-     * @param more
+     * @param more Further text
      */
     private static void processStats(final String more) {
         //TODO: Refactor deep looping
     	if (more.equals("")) {
 	    	HashMap<String, Integer> statistics = new HashMap<String, Integer>();
 	    	Iterator<Entry<String, Item>> i = game.getEquipment().entrySet().iterator();
-	    	if (i.hasNext()) {
-	            while (i.hasNext()) {
-	            	Item item = i.next().getValue();
-	            	Iterator<Entry<String, Integer>> j = item.getStats().entrySet().iterator();
-	                while (j.hasNext()) {
-	                	Entry<String, Integer> stat = j.next();
-	                	if (statistics.containsKey(stat.getKey())) {
-	                		statistics.put(stat.getKey(), statistics.get(stat.getKey()) + stat.getValue());
-	                	} else {
-	                		statistics.put(stat.getKey(), stat.getValue());
-	                	}
-	                }
-	            }
-	    	}
+            while (i.hasNext()) {
+            	Item item = i.next().getValue();
+            	Iterator<Entry<String, Integer>> j = item.getStats().entrySet().iterator();
+                while (j.hasNext()) {
+                	Entry<String, Integer> stat = j.next();
+                	if (statistics.containsKey(stat.getKey())) {
+                		statistics.put(stat.getKey(), statistics.get(stat.getKey()) + stat.getValue());
+                	} else {
+                		statistics.put(stat.getKey(), stat.getValue());
+                	}
+                }
+            }
 	    	Iterator<Entry<String, Integer>> k = statistics.entrySet().iterator();
 	    	if (k.hasNext()) {
 	    		while (k.hasNext()) {
@@ -337,4 +348,12 @@ public class CommandProcessor {
 	        }
     	}
 	}
+
+    /**
+     * 
+     * @param ui
+     */
+    public static void setScreen(final UI ui) {
+        screen = ui;
+    }
 }

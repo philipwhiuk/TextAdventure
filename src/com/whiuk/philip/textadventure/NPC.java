@@ -106,7 +106,7 @@ public class NPC {
                     Element exElement = (Element) eElement.getChildNodes()
                             .item(e);
                     Conversation c = Conversation.read(exElement);
-                    n.add(c.name, c);
+                    n.add(c.getName(), c);
                 }
             }
         }
